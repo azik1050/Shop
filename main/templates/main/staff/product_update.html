@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Update Product
+{% endblock %}
+
+
+
+
+{% block content %}
+    <div class="container" style="background-color: grey; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <h1>Update product</h1>
+        <div class="form-group mt-3" style="width: 750px;">
+            <form method="post" enctype="multipart/form-data">
+
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.title }}
+                {{ form.description }}
+                {{ form.text }}
+                {{ form.price }}
+                {{ form.total }}
+                {{ form.color }}
+                {{ form.material }}
+                {{ form.image }}
+                {{ form.is_active }}
+                <div>
+                    <button class="btn btn-outline mt-4" type="submit">SEND</button>
+                    <a href="{% url 'product_detail' product.slug %}" class=" mt-4 btn btn-dark">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

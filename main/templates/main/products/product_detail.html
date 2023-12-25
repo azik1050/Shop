@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="furnitures_section layout_padding">
+         <div class="container">
+            <h1 class="our_text">{{ product.title }}</h1>
+            <p class="ipsum_text">{{ product.description }} </p>
+            <div class="furnitures_section2 layout_padding">
+               <div class="row">
+                    <div class="left-product_detail" style="border-right: 2px solid #333;; padding-right: 15px; width: 50%;">
+                        <img src="{{ product.image.url }}" style="width: 100%; height: 360px;">
+                    </div>
+                    <div class="right-product_detail ml-5" style="padding-left: 15px; width: 40%">
+                        <h1>Price: {{ product.price }}$</h1>
+                        <h1>Total: {{ product.total }}</h1>
+                        {% if not product.material == None %}
+                            <h1>Color: {{ product.color }}</h1>
+                        {% endif %}
+                        {% if not product.color == None %}
+                            <h1>Material: {{ product.material }}</h1>
+                        {% endif %}
+                        <div>
+                            {% if user.is_staff %}
+                                <a href="{% url 'product_update' product.slug %}" class="btn btn-outline-primary">Change Product</a>
+                                <a href="{% url 'product_delete' product.slug %}" class="btn btn-outline-danger">Delete Product</a>
+                            {% endif %}
+                        </div>
+
+                        <a href="{% url 'add_to_cart' product.slug %}" class="btn btn-dark mt-2">Add to cart</a>
+                    </div>
+                   <div class="container_main" style="width: 100%;">
+                       <p>{{ product.text|safe }}</p>
+                   </div>
+               </div>
+            </div>
+         </div>
+      </div>
+{% endblock %}
+

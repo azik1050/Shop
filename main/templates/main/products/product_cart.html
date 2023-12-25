@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Shop
+{% endblock %}
+
+
+{% block content %}
+          <!-- furnitures section start -->
+      <div class="furnitures_section layout_padding">
+         <div class="container">
+         <div>
+             <a href="{% url 'order_products' %}" class="btn btn-outline-success" style="font-size: 25px;">Make an order</a>
+         </div>
+            <h1 class="our_text">YOUR furnitures ({{ page_obj.paginator.count }})</h1>
+            <p class="ipsum_text">There are many variations of passages of Lorem Ipsum </p>
+            <div class="furnitures_section2 layout_padding">
+               <div class="row">
+                   {% if products %}
+                       {% for el in products %}
+                           {% if el.product.is_active %}
+                               <div class="col-md-6 mt-1">
+                                 <div class="container_main">
+                                    <img src="{{ el.product.image.url }}" style="height: 360px; width: 540px;" alt="Avatar" class="image">
+                                    <div class="overlay">
+                                       <a href="#" class="icon" title="User Profile">
+                                       <i class="fa fa-search"></i>
+                                       </a>
+                                    </div>
+                                 </div>
+                                 <h3 class="temper_text">
+                                     <a href="{% url 'product_detail' el.product.slug %}" class="temper_text">{{ el.product.title }}, ({{ el.quantity }})</a>
+                                     <a href="{% url 'shop_category' el.product.category.slug %}">{{ el.product.category.name }}</a>
+                                 </h3>
+                                   <p class="dololr_text">{{ el.product.description }} </p>
+                                   <a href="{% url 'delete_from_cart' el.id %}" class="btn btn-outline-danger">Delete</a>
+                                   <a href="{% url 'add_to_cart' el.product.slug %}" class="btn btn-outline-info">Change quantity</a>
+                              </div>
+                           {% endif %}
+                       {% endfor %}
+                   {% else %}
+
+                       <div>
+                           <h1>Your cart is empty, but we can fix it!</h1>
+                           <a href="{% url 'main_shop' %}" class="btn btn-dark">OUR SHOP</a>
+                       </div>
+
+                   {% endif %}
+
+               </div>
+            </div>
+             <div class="pages">
+                   {% if is_paginated %}
+                       {% if page_obj.has_previous %}
+                           <a href="?page=1" class="btn btn-outline-warning">First</a>
+                           <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-warning">Prev</a>
+                       {% endif %}
+
+                       {% for el in page_obj.paginator.page_range %}
+                        {% if page_obj.number == el %}
+                            <a href="?page={{ el }}" class="btn btn-warning">{{ el }}</a>
+                        {% elif el > page_obj.number|add:'-3' and el < page_obj.number|add:'3' %}
+                            <a href="?page={{ el }}" class="btn btn-outline-warning">{{ el }}</a>
+                        {% endif %}
+                       {% endfor %}
+
+
+                       {% if page_obj.has_next %}
+                           <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-warning">Next</a>
+                           <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-warning">Last</a>
+                       {% endif %}
+
+                   {% endif %}
+               </div>
+
+         </div>
+      </div>
+      <!-- furnitures section end -->
+
+{% endblock %}

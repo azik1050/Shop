@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Register
+{% endblock %}
+
+{% block content %}
+    <div class="contact_section layout_padding">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-6">
+                  <h1 class="contact_text">Change Profile</h1>
+                  <div class="mail_sectin">
+                      <form method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          {{ uimg.image }}
+                          {{ uinfo.username }}
+                          {{ uinfo.email }}
+                          {{ ubio.bio }}
+                          <button type="submit" class="btn btn-info mt-2">Save</button>
+                          <a href="{% url 'profile' %}" class="btn btn-dark mt-2">Back</a>
+                      </form>
+
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="image_9"><img src="{{ user.profile.image.url }}" style="width: 500px; height: 375px;"></div>
+               </div>
+            </div>
+         </div>
+      </div>
+{% endblock %}

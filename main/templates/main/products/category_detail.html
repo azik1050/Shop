@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+{{ category.name }}
+{% endblock %}
+
+
+
+
+{% block content %}
+    <div class="furnitures_section layout_padding">
+         <div class="container">
+            <h1 class="our_text">{{ category.name }}</h1>
+{#            <p class="ipsum_text">{{ category.description }} </p>#}
+            <div class="furnitures_section2 layout_padding">
+               <div class="row">
+                    <div class="left-product_detail" style="border-right: 2px solid #333;; padding-right: 15px; width: 50%">
+                        <img src="{{ category.image.url }}" style="width: 500px; height: 500px;">
+                    </div>
+                    <div class="right-product_detail ml-5" style="padding-left: 15px; width: 40%">
+                        <p>{{ category.description }}</p>
+                        <a href="{% url 'shop_category' category.slug %}" class="btn btn-outline-warning">Related products</a>
+                    </div>
+                   <div class="container_main mt-5" style="width: 100%;">
+                       <p>{{ category.text|safe }}</p>
+                   </div>
+               </div>
+            </div>
+         </div>
+      </div>
+{% endblock %}

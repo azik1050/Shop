@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	Services
+{% endblock %}
+
+
+{% block content %}
+	      <!-- services section start -->
+      <div class="services_section layout_padding">
+         <div class="container">
+            <h1 class="services_taital">our services</h1>
+            <p class="many_taital">There are many variations of passages of Lorem Ipsum </p>
+            <div class="services_section2 layout_padding">
+               <div class="row">
+                   {% if services %}
+                       {% for el in services %}
+                          <div class="col-lg-3 col-sm-6 mt-4">
+                             <div class="icon_1"><img src="{{ el.image.url }}" style="width: 80px; height: 80px;"></div>
+                             <h2 class="furnitures_text">{{ el.name }}</h2>
+                             <p class="dummy_text">{{ el.description }}</p>
+                             <div class="read_bt_main">
+                                <div class="read_bt"><a href="{% url 'shop_category' el.slug %}">Related Products</a></div>
+                             </div>
+                          </div>
+                       {% endfor %}
+                   {% else %}
+                  <div class="col-lg-3 col-sm-6">
+                     <div class="icon_1"><img src="{% static 'main/images/icon-1.png' %}"></div>
+                     <h2 class="furnitures_text">Furnitures</h2>
+                     <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the</p>
+                     <div class="read_bt_main">
+                        <div class="read_bt"><a href="#">Read More</a></div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6">
+                     <div class="icon_1"><img src="{% static 'main/images/icon-2.png' %}"></div>
+                     <h2 class="furnitures_text">office</h2>
+                     <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the</p>
+                     <div class="read_bt_main">
+                        <div class="read_bt"><a href="#">Read More</a></div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6">
+                     <div class="icon_1"><img src="{% static 'main/images/icon-3.png' %}"></div>
+                     <h2 class="furnitures_text">Home</h2>
+                     <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the</p>
+                     <div class="read_bt_main">
+                        <div class="read_bt"><a href="#">Read More</a></div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 col-sm-6">
+                     <div class="icon_1"><img src="{% static 'main/images/icon-4.png' %}"></div>
+                     <h2 class="furnitures_text">badroom</h2>
+                     <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the</p>
+                     <div class="read_bt_main">
+                        <div class="read_bt"><a href="#">Read More</a></div>
+                     </div>
+                  </div>
+                   {% endif %}
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- services section end -->
+
+{% endblock %}
+
+
+

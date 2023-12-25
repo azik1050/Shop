@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	Shop
+{% endblock %}
+
+
+{% block content %}
+          <!-- furnitures section start -->
+      <div class="furnitures_section layout_padding">
+         <div class="container">
+            <h1 class="our_text">OUR furnitures ({{ page_obj.paginator.count }})</h1>
+            <p class="ipsum_text">There are many variations of passages of Lorem Ipsum </p>
+            <div class="furnitures_section2 layout_padding">
+               <div class="row">
+                   {% if furnitures %}
+                       {% for el in furnitures %}
+                           <div class="col-md-6">
+                             <div class="container_main">
+                                <img src="{{ el.image.url }}" style="height: 360px  ; width: 540px;" alt="Avatar" class="image">
+                                <div class="overlay">
+                                   <a href="#" class="icon" title="User Profile">
+                                   <i class="fa fa-search"></i>
+                                   </a>
+                                </div>
+                             </div>
+                             <h3 class="temper_text">
+                                 <a href="{% url 'product_detail' el.slug %}" class="temper_text">{{ el.title }}</a>
+                                 <a href="{% url 'shop_category' el.category.slug %}">{{ el.category.name }}</a>
+                             </h3>
+                               <a href="{% url 'add_to_cart' el.slug %}" class="btn btn-dark mt-2">Add to cart</a>
+                               <p class="dololr_text">{{ el.description }} </p>
+                          </div>
+                       {% endfor %}
+                   {% else %}
+                     <div class="col-md-6">
+                         <div class="container_main">
+                            <img src="{% static 'main/images/img-2.png' %}" alt="Avatar" class="image">
+                            <div class="overlay">
+                               <a href="#" class="icon" title="User Profile">
+                               <i class="fa fa-search"></i>
+                               </a>
+                            </div>
+                         </div>
+                         <h3 class="temper_text">Tempor incididunt ut labore et dolore</h3>
+                         <p class="dololr_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi </p>
+                      </div>
+                      <div class="col-md-6">
+                         <div class="container_main">
+                            <img src="{% static 'main/images/img-3.png' %}" alt="Avatar" class="image">
+                            <div class="overlay">
+                               <a href="#" class="icon" title="User Profile">
+                               <i class="fa fa-search"></i>
+                               </a>
+                            </div>
+                         </div>
+                         <h3 class="temper_text">Tempor incididunt ut labore et dolore</h3>
+                         <p class="dololr_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi </p>
+                      </div>
+                   {% endif %}
+
+               </div>
+            </div>
+             <div class="pages">
+                   {% if is_paginated %}
+                       {% if page_obj.has_previous %}
+                           <a href="?page=1" class="btn btn-outline-warning">First</a>
+                           <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-warning">Prev</a>
+                       {% endif %}
+
+                       {% for el in page_obj.paginator.page_range %}
+                        {% if page_obj.number == el %}
+                            <a href="?page={{ el }}" class="btn btn-warning">{{ el }}</a>
+                        {% elif el > page_obj.number|add:'-3' and el < page_obj.number|add:'3' %}
+                            <a href="?page={{ el }}" class="btn btn-outline-warning">{{ el }}</a>
+                        {% endif %}
+                       {% endfor %}
+
+
+                       {% if page_obj.has_next %}
+                           <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-warning">Next</a>
+                           <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-warning">Last</a>
+                       {% endif %}
+
+                   {% endif %}
+               </div>
+
+         </div>
+      </div>
+      <!-- furnitures section end -->
+
+{% endblock %}
