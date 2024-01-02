@@ -7,7 +7,7 @@ from django.urls import reverse
 
 
 class Category(models.Model):
-    name = models.CharField(verbose_name='Category', max_length=50, db_index=True)
+    name = models.CharField(verbose_name='Category name', max_length=50, db_index=True)
     slug = models.SlugField(verbose_name='Identificator', unique=True)
     description = models.CharField(verbose_name='Short Description', max_length=255)
     text = RichTextField(verbose_name='Long Description')
@@ -25,7 +25,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Category')
-    title = models.CharField(verbose_name='Title', max_length=50)
+    title = models.CharField(verbose_name='Product name', max_length=50)
     description = models.TextField(verbose_name='Short Description', max_length=255)
     text = RichTextField(verbose_name='Long Description')
     price = models.DecimalField(max_digits=4, decimal_places=2, verbose_name='Price')
@@ -52,7 +52,7 @@ class ProductCartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now=True)
-    quantity = models.PositiveIntegerField(verbose_name='Quantity', max_length=4, default=0)
+    quantity = models.PositiveIntegerField(verbose_name='Quantity', default=0)
 
 
 class AboutPage(models.Model):
@@ -70,10 +70,11 @@ class AboutPage(models.Model):
         verbose_name_plural = '"About Pages"'
 
 
-
-
-
-
+class ProductComment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    content = models.TextField(verbose_name='Content', max_length=5000)
+    sent_at = models.DateTimeField(auto_now_add=True)
 
 
 

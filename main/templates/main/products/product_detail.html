@@ -41,6 +41,34 @@
                </div>
             </div>
          </div>
+
+        <div class="container">
+            {% if user.is_authenticated %}
+                <div class="add_comment_form">
+                    <form method="post" action="{% url 'add_comment' product.slug %}">
+                        {% csrf_token %}
+                        <label for="comment_text">Add your comment:</label>
+                        {{ com_form.content }}
+                        <button type="submit" class="btn btn-primary mt-2">Submit Comment</button>
+                    </form>
+                </div>
+            {% else %}
+                <p class="login_message">Please <a href="{% url 'login' %}">login</a> to add comments.</p>
+            {% endif %}
+            <h2 class="mt-5">Product Comments</h2>
+
+            {% for comment in comments %}
+                <div class="comment" style="background-color: ghostwhite;">
+                    <strong>{{ comment.author.username }}</strong>
+                    <p>{{ comment.content }}</p>
+                    <p class="comment_date">{{ comment.sent_at|date:"F d, Y H:i" }}</p>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </div>
+
       </div>
 {% endblock %}
 

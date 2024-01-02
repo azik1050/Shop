@@ -13,6 +13,16 @@
          <div class="container">
             <h1 class="our_text">OUR furnitures ({{ page_obj.paginator.count }})</h1>
             <p class="ipsum_text">There are many variations of passages of Lorem Ipsum </p>
+            <form>
+                 <input type="text" name="search" placeholder="Product name" class="form-control-border">
+                 <button type="submit" class="btn btn-warning">Search</button>
+                {% if  page_obj.paginator.count  == 1 %}
+                	{{ page_obj.paginator.count }} result
+                {% else %}
+                    {{ page_obj.paginator.count }} results
+                {% endif %}
+
+             </form>
             <div class="furnitures_section2 layout_padding">
                <div class="row">
                    {% if furnitures %}
@@ -36,29 +46,9 @@
                        {% endfor %}
                    {% else %}
                      <div class="col-md-6">
-                         <div class="container_main">
-                            <img src="{% static 'main/images/img-2.png' %}" alt="Avatar" class="image">
-                            <div class="overlay">
-                               <a href="#" class="icon" title="User Profile">
-                               <i class="fa fa-search"></i>
-                               </a>
-                            </div>
-                         </div>
-                         <h3 class="temper_text">Tempor incididunt ut labore et dolore</h3>
-                         <p class="dololr_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi </p>
-                      </div>
-                      <div class="col-md-6">
-                         <div class="container_main">
-                            <img src="{% static 'main/images/img-3.png' %}" alt="Avatar" class="image">
-                            <div class="overlay">
-                               <a href="#" class="icon" title="User Profile">
-                               <i class="fa fa-search"></i>
-                               </a>
-                            </div>
-                         </div>
-                         <h3 class="temper_text">Tempor incididunt ut labore et dolore</h3>
-                         <p class="dololr_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi </p>
-                      </div>
+                        <h1>No such elements</h1>
+                         <a href="{% url 'main_shop' %}" class="btn btn-outline-info">Display all products</a>
+                     </div>
                    {% endif %}
 
                </div>

@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product, ProductCartItem, AboutPage
+from .models import Category, Product, ProductCartItem, AboutPage, ProductComment
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
-from .forms import ProductCartItemForm, ProductUpdateForm
+from .forms import ProductCartItemForm, ProductUpdateForm, CommentForm
 from django.urls.exceptions import Http404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from users.forms import UserReviewForm
 from users.models import UserReview
-
+# from django.contrib.postgres.search import SearchQuery, SearchVector
 
 def index_main(req):
     review = UserReviewForm()
@@ -60,6 +60,12 @@ class ProductList(ListView):
     paginate_by = 20
 
     def get_queryset(self):
+        search = self.request.GET.get('search')
+        if search:
+            return Product.objects.filter(title__icontains=search, is_active=True).order_by('-updated_at')
+            # vector = SearchVector('title')
+            # query = SearchQuery(search)
+            # return Product.objects.annotate(search=vector).filter(search=query, is_active=True).order_by('-updated_at')
         return Product.objects.filter(is_active=True).order_by('-updated_at')
 
 
@@ -74,11 +80,30 @@ class ProductListBycategory(ListView):
         return Product.objects.filter(category=category, is_active=True).order_by('-updated_at')
 
 
-class ProductDetail(LoginRequiredMixin, DetailView):
-    model = Product
-    context_object_name = 'product'
-    template_name = 'main/products/product_detail.html'
-    login_url = '/users/login/'
+
+@login_required(login_url='login')
+def product_detail(req, slug):
+    product = get_object_or_404(Product, slug=slug)
+    comments = ProductComment.objects.filter(product=product)
+    data = {
+        'product': product,
+        'comments': comments,
+        'com_form': CommentForm()
+    }
+    return render(req, 'main/products/product_detail.html', data)
+
+
+@login_required(login_url='login')
+def add_comment(req, slug):
+    if req.method == 'POST':
+        com_form = CommentForm(req.POST)
+        product = Product.objects.filter(slug=slug).first()
+        if com_form.is_valid():
+            messages.info(req, 'Your comment has been saved!')
+            ProductComment.objects.create(author=req.user, product=product, content=com_form.instance.content)
+            return redirect('product_detail', slug)
+    else:
+        com_form = CommentForm()
 
 
 

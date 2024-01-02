@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProductCartItem, Product
+from .models import ProductCartItem, Product, ProductComment
 
 
 class ProductCartItemForm(forms.ModelForm):
@@ -41,6 +41,17 @@ class ProductUpdateForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('title', 'description', 'text', 'price', 'total', 'image', 'is_active', 'color', 'material')
+
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control border-class',
+        'placeholder': 'Enter text'
+    }))
+    class Meta:
+        model = ProductComment
+        fields = ('content',)
+
 
 
 
