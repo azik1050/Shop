@@ -2,8 +2,13 @@ from django.contrib import admin
 from .models import Category, Product, AboutPage
 
 
+class ProductInline(admin.StackedInline):
+    extra = 0
+    model = Product
+
 
 class CategoryAdmin(admin.ModelAdmin):
+    inlines = (ProductInline,)
     list_display = ('name', 'slug')
     list_filter = ('name', 'slug')
     list_display_links = ('name',)
